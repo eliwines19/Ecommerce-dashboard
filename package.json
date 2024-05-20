@@ -1,0 +1,16 @@
+{
+  "name": "admin-dashboard",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "install-server": "cd backend && npm install",
+    "start-server": "cd backend && node app.js",
+    "install-client": "cd dashboard && npm install",
+    "build-client": "cd dashboard && npm run build",
+    "start-client": "cd dashboard && npm run start"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

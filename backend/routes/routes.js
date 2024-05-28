@@ -1,6 +1,7 @@
 const { addEmployee, getEmployees, deleteEmployee } = require('../controllers/employee')
 const { addProduct, getProducts, deleteProduct } = require('../controllers/product')
 const { addSale, getSales, deleteSale } = require('../controllers/sale')
+const { signup } = require('../controllers/auth')
 
 const router = require('express').Router()
 
@@ -13,5 +14,6 @@ router.post('/employee/new', addEmployee)
     .post('/sale/new', addSale)
     .get('/sales', getSales)
     .delete('/sale/delete/:id', deleteSale)
+    .post('/signup', signup)
 
 module.exports = router

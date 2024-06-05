@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useState } from 'react'
-import axios from 'axios'
+import React, { createContext, useContext, useState } from 'react';
+import axios from 'axios';
 
 const BASE_URL = 'http://localhost:3000/api/v1'
 
@@ -131,6 +131,32 @@ export const ContextProvider = ({ children }) => {
         return prettyNumber(employees.length)
     }
     // end employee methods
+    // authentication methods
+    const signup = async (credentials, handleError, handleSuccess, navigate) => {
+        try {
+            const { data } = await axios.post(`${BASE_URL}/signup`, credentials, { withCredentials: true })
+            const { success, message } = data
+            if(success){
+                handleSuccess(message)
+                setTimeout(() => {
+                    navigate('/');
+                }, 1000)
+            }else{
+                handleError(message)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const login = async (credentials, handleError, handleSuccess, navigate) => {
+        try {
+            
+        } catch (error) {
+            
+        }
+    }
+    // end authentication methods
 
     const currentYear = new Date().getUTCFullYear()
 
@@ -189,7 +215,9 @@ export const ContextProvider = ({ children }) => {
                 addEmployee,
                 getEmployees,
                 deleteEmployee,
-                totalEmployees
+                totalEmployees,
+                signup,
+                login
             }}
         >
             {children}

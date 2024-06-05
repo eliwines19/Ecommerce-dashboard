@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
+import { useCookies } from "react-cookie";
 import axios from 'axios';
 
 const BASE_URL = 'http://localhost:3000/api/v1'
@@ -22,6 +23,8 @@ export const ContextProvider = ({ children }) => {
     const [ employees, setEmployees ] = useState([])
     const [ products, setProducts ] = useState([])
     const [ sales, setSales ] = useState([])
+    const [cookies, removeCookie] = useCookies([]);
+    const [username, setUsername] = useState("");
 
     // sale methods
     const addSale = async (sale) => {
@@ -165,6 +168,21 @@ export const ContextProvider = ({ children }) => {
             console.log(error)
         }
     }
+
+    const verifyCookie = async (navigate, toast) => {
+        if(!cookies.token){
+            navigate('/login');
+        }
+        const { data } = await axios.post(`${BASE_URL}/`, {}, { withCredentials: true });
+        const { status, user } = data;
+        setUsername(user)
+        return status ? toast(`Hello ${user}`, { position: 'top-right' }) : removeCookie('token', navigate('/login'))
+    }
+
+    const logout = (navigate) => {
+        removeCookie("token")
+        navigate("/login")
+    }
     // end authentication methods
 
     const currentYear = new Date().getUTCFullYear()
@@ -226,7 +244,12 @@ export const ContextProvider = ({ children }) => {
                 deleteEmployee,
                 totalEmployees,
                 signup,
-                login
+                login,
+                logout,
+                verifyCookie,
+                cookies,
+                removeCookie,
+                username
             }}
         >
             {children}

@@ -6,10 +6,9 @@ import { useStateContext } from '../contexts/ContextProvider'
 
 const Login = () => {
 
-  const { activeMenu, setActiveMenu, login, currentColor } = useStateContext();
+  const { setActiveMenu, login, currentColor } = useStateContext();
   useEffect(() => {
     setActiveMenu(false);
-    console.log(activeMenu)
   })
 
   const navigate = useNavigate();

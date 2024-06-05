@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
-import { Routes, Route, useLocation } from 'react-router-dom'
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom'
 import { FiSettings } from 'react-icons/fi'
 import { TooltipComponent } from '@syncfusion/ej2-react-popups'
+import { ToastContainer, toast } from "react-toastify";
 
 import { Navbar, Sidebar, ThemeSettings } from './components'
 import { SaleForm, ProductForm, EmployeeForm, Ecommerce, Products, Sales, Calendar, Employees, Stacked, Pyramid, Customers, Kanban, Area, Bar, Pie, Line, Financial, ColorPicker, ColorMapping, Editor, Login, Signup } from './pages'
@@ -10,16 +11,18 @@ import './App.css'
 import { useStateContext } from './contexts/ContextProvider'
 
 const App = () => {
-    const { activeMenu, themeSettings, setThemeSettings, currentColor, currentMode, getEmployees, getSales, getProducts } = useStateContext()
+    const { cookies, removeCookie, verifyCookie, username, activeMenu, themeSettings, setThemeSettings, currentColor, currentMode, getEmployees, getSales, getProducts } = useStateContext()
 
-    const location = useLocation()
-    const hideComponents = ['/login', '/signup'].includes(location.pathname)
+    const location = useLocation();
+    const hideComponents = ['/login', '/signup'].includes(location.pathname);
+    const navigate = useNavigate();
 
     useEffect(() => {
         getEmployees()
         getSales()
         getProducts()
-    }, [])
+        verifyCookie(navigate, toast)
+    }, [cookies, navigate, removeCookie])
 
     return (
         <div className={currentMode === 'Dark' ? 'dark' : ''}>

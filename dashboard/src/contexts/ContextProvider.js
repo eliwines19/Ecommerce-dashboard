@@ -151,9 +151,18 @@ export const ContextProvider = ({ children }) => {
 
     const login = async (credentials, handleError, handleSuccess, navigate) => {
         try {
-            
+            const { data } = await axios.post(`${BASE_URL}/login`, credentials, { withCredentials: true });
+            const { success, message } = data;
+            if(success){
+                handleSuccess(message);
+                setTimeout(() => {
+                    navigate('/')
+                }, 1000)
+            }else{
+                handleError(message)
+            }
         } catch (error) {
-            
+            console.log(error)
         }
     }
     // end authentication methods

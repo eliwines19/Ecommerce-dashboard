@@ -48,7 +48,7 @@ const Signup = () => {
     <div>
       <form onSubmit={handleSubmit}>
         <div>
-          <Header category="" title="New Employee" />
+          <Header category="" title="Create An Account" />
           <div>
             <input
               type="text"

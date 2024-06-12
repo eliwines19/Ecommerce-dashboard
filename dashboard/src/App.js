@@ -21,7 +21,7 @@ const App = () => {
         getEmployees()
         getSales()
         getProducts()
-        verifyCookie(navigate, toast)
+        verifyCookie(navigate, toast, location)
     }, [cookies, navigate, removeCookie])
 
     return (

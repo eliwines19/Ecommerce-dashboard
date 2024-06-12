@@ -138,9 +138,14 @@ export const ContextProvider = ({ children }) => {
     const signup = async (credentials, handleError, handleSuccess, navigate) => {
         try {
             const { data } = await axios.post(`${BASE_URL}/signup`, credentials, { withCredentials: true })
-            const { success, message } = data
+            const { success, message, token } = data
             if(success){
                 handleSuccess(message)
+                setCookie('token', token, {
+                    path: '/',
+                    httpOnly: false,
+                    sameSite: 'Strict'
+                })
                 setTimeout(() => {
                     navigate('/');
                 }, 1000)
@@ -174,9 +179,11 @@ export const ContextProvider = ({ children }) => {
         }
     }
 
-    const verifyCookie = async (navigate, toast) => {
+    const verifyCookie = async (navigate, toast, location) => {
         if(!cookies.token){
-            navigate('/login');
+            if (location.pathname !== '/signup'){
+                navigate('/login');
+            }
         } else {
             const { data } = await axios.post(`${BASE_URL}/`, {}, { withCredentials: true });
             const { status, user } = data;
@@ -184,7 +191,6 @@ export const ContextProvider = ({ children }) => {
             if(status === false) {
                 removeCookie('token', navigate('/login'))
             }
-            // return status ? toast(`Hello ${user}`, { position: 'top-right' }) : removeCookie('token', navigate('/login'))
         }
     }
 

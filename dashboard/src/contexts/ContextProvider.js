@@ -23,8 +23,8 @@ export const ContextProvider = ({ children }) => {
     const [ employees, setEmployees ] = useState([])
     const [ products, setProducts ] = useState([])
     const [ sales, setSales ] = useState([])
-    const [cookies, removeCookie] = useCookies([]);
-    const [username, setUsername] = useState("");
+    const [ cookies, setCookie, removeCookie ] = useCookies(['token']);
+    const [ username, setUsername ] = useState("");
 
     // sale methods
     const addSale = async (sale) => {
@@ -155,9 +155,14 @@ export const ContextProvider = ({ children }) => {
     const login = async (credentials, handleError, handleSuccess, navigate) => {
         try {
             const { data } = await axios.post(`${BASE_URL}/login`, credentials, { withCredentials: true });
-            const { success, message } = data;
+            const { success, message, token } = data;
             if(success){
                 handleSuccess(message);
+                setCookie('token', token, {
+                    path: '/',
+                    httpOnly: false,
+                    sameSite: 'Strict'
+                })
                 setTimeout(() => {
                     navigate('/')
                 }, 1000)
@@ -172,11 +177,15 @@ export const ContextProvider = ({ children }) => {
     const verifyCookie = async (navigate, toast) => {
         if(!cookies.token){
             navigate('/login');
+        } else {
+            const { data } = await axios.post(`${BASE_URL}/`, {}, { withCredentials: true });
+            const { status, user } = data;
+            setUsername(user)
+            if(status === false) {
+                removeCookie('token', navigate('/login'))
+            }
+            // return status ? toast(`Hello ${user}`, { position: 'top-right' }) : removeCookie('token', navigate('/login'))
         }
-        const { data } = await axios.post(`${BASE_URL}/`, {}, { withCredentials: true });
-        const { status, user } = data;
-        setUsername(user)
-        return status ? toast(`Hello ${user}`, { position: 'top-right' }) : removeCookie('token', navigate('/login'))
     }
 
     const logout = (navigate) => {

@@ -28,7 +28,6 @@ const Doughnut = ({ id, legendVisiblity, height }) => {
 
     const result = Object.entries(salesCount).map((sale) => {
       const percentage = totalSalesNum > 0 ? Math.round((sale[1] / totalSalesNum * 100)) : 0
-      console.log(`${percentage}%`)
       return {
         x: `${sale[0]}`,
         y: sale[1],

@@ -1,4 +1,4 @@
-const userSchema = require('../models/UserModel')
+const UserSchema = require('../models/UserModel')
 require('dotenv').config()
 const jwt = require('jsonwebtoken')
 
@@ -7,11 +7,11 @@ module.exports.userVerification = (req, res) => {
     if(!token){
         return res.json({ status: false })
     }
-    jwt.verify(token, process.env.TOKEN_KEY, async (err, data) => {
+    jwt.verify(token, `${process.env.TOKEN_SECRET}`, async (err, data) => {
         if(err){
             return res.json({ status: false })
         } else {
-            const user = userSchema.findById(data.id)
+            const user = await UserSchema.findById(data.id)
             if(user){
                 return res.json({ status: true, user: user.username })
             } else {

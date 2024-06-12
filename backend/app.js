@@ -10,6 +10,7 @@ const PORT = process.env.PORT
 
 //middlewares
 app.use(express.json())
+app.use(cookieParser())
 app.use(
     cors({
         origin: ["http://localhost:3001"],
@@ -17,7 +18,6 @@ app.use(
         credentials: true,
     })
 );
-app.use(cookieParser())
 
 //routes
 readdirSync('./routes').map((route) => app.use('/api/v1', require('./routes/' + route)))

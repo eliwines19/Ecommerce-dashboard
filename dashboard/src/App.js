@@ -11,7 +11,7 @@ import './App.css'
 import { useStateContext } from './contexts/ContextProvider'
 
 const App = () => {
-    const { cookies, removeCookie, verifyCookie, username, activeMenu, themeSettings, setThemeSettings, currentColor, currentMode, getEmployees, getSales, getProducts } = useStateContext()
+    const { cookies, removeCookie, verifyCookie, activeMenu, themeSettings, setThemeSettings, currentColor, currentMode, getEmployees, getSales, getProducts } = useStateContext()
 
     const location = useLocation();
     const hideComponents = ['/login', '/signup'].includes(location.pathname);

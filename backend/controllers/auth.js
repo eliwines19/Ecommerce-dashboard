@@ -12,6 +12,7 @@ exports.signup = async (req, res, next) => {
         const user = await UserSchema.create({ email, password, username });
         const token = createSecretToken(user._id);
         res.cookie("token", token, {
+          path: '/',
           withCredentials: true,
           httpOnly: false,
         });

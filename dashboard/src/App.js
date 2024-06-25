@@ -21,6 +21,7 @@ const App = () => {
         getEmployees()
         getSales()
         getProducts()
+        console.log('Current Cookie: ', cookies)
         verifyCookie(navigate, toast, location)
     }, [cookies, navigate, removeCookie])
 

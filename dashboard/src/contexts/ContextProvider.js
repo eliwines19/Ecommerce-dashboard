@@ -143,7 +143,6 @@ export const ContextProvider = ({ children }) => {
                 handleSuccess(message)
                 setCookie('token', token, {
                     path: '/',
-                    httpOnly: false,
                     sameSite: 'Strict'
                 })
                 setTimeout(() => {
@@ -162,11 +161,12 @@ export const ContextProvider = ({ children }) => {
             const { data } = await axios.post(`${BASE_URL}/login`, credentials, { withCredentials: true });
             const { success, message, token } = data;
             if(success){
+                console.log('setting cookie: ', token)
                 handleSuccess(message);
                 setCookie('token', token, {
                     path: '/',
-                    httpOnly: false,
-                    sameSite: 'Strict'
+                    httpOnly: false
+                    // sameSite: 'Lax'
                 })
                 setTimeout(() => {
                     navigate('/')
@@ -180,18 +180,29 @@ export const ContextProvider = ({ children }) => {
     }
 
     const verifyCookie = async (navigate, toast, location) => {
-        if(!cookies.token){
-            if (location.pathname !== '/signup'){
-                navigate('/login');
-            }
-        } else {
-            const { data } = await axios.post(`${BASE_URL}/`, {}, { withCredentials: true });
-            const { status, user } = data;
-            setUsername(user)
-            if(status === false) {
-                removeCookie('token', navigate('/login'))
-            }
-        }
+        console.log(cookies.token)
+        // if(!cookies.token){
+        //     console.log('no cookie found')
+        //     if (location.pathname !== '/signup'){
+        //         navigate('/login');
+        //     }
+        // } else {
+        //     try {
+        //         const { data } = await axios.post(`${BASE_URL}/`, {}, { withCredentials: true });
+        //         const { status, user } = data;
+        //         if(status === false){
+        //             console.log('invalid token')
+        //             removeCookie('token')
+        //             navigate('/login')
+        //         } else {
+        //             setUsername(user)
+        //         }
+        //     } catch (error) {
+        //         console.error('Error verifying token:', error)
+        //         removeCookie('token')
+        //         navigate('/login')
+        //     }
+        // }
     }
 
     const logout = (navigate) => {

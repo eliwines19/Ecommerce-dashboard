@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import { SiShopware } from 'react-icons/si'
 import { useStateContext } from '../contexts/ContextProvider'
 
@@ -24,18 +24,9 @@ const Login = () => {
     setInputState({...inputState, [name]: e.target.value})
   }
 
-  const handleError = (err) =>
-    toast.error(err, {
-      position: "bottom-left",
-    });
-  const handleSuccess = (msg) =>
-    toast.success(msg, {
-      position: "bottom-right",
-    });
-
   const handleSubmit = e => {
     e.preventDefault();
-    login(inputState, handleError, handleSuccess, navigate);
+    login(inputState, navigate);
     setInputState({
       email: '',
       password: ''

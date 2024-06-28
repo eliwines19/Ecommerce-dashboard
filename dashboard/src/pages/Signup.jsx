@@ -25,18 +25,9 @@ const Signup = () => {
     setInputState({...inputState, [name]: e.target.value})
   }
 
-  const handleError = (err) =>
-    toast.error(err, {
-      position: "bottom-left",
-    });
-  const handleSuccess = (msg) =>
-    toast.success(msg, {
-      position: "bottom-right",
-    });
-
   const handleSubmit = e => {
     e.preventDefault()
-    signup(inputState, handleError, handleSuccess, navigate)
+    signup(inputState, navigate)
     setInputState({
       email: '',
       username: '',

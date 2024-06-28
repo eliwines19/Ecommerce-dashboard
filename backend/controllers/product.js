@@ -12,12 +12,15 @@ exports.addProduct = async (req, res) => {
     try {
         //validations
         if(!img || !name || !price){
-            return res.status(400).json({Error: 'All fields required'})
+            return res.json({ error: "All Fields Required" })
+        }
+        if(!/^\d+$/.test(price)){
+            return res.json({ error: "Price of Product must be a number" })
         }
         await product.save()
-        return res.status(200).json({ message: "Product Created Successfully" })
+        return res.status(200).json({ message: "Product Added Successfully" })
     } catch (error) {
-        return res.status(500).json({ Error: error })
+        return res.status(500).json({ error: error })
     }
 }
 

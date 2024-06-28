@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
 import { useCookies } from "react-cookie";
+import { toast } from "react-toastify";
 import axios from 'axios';
 
 const BASE_URL = 'http://localhost:3000/api/v1'
@@ -28,10 +29,18 @@ export const ContextProvider = ({ children }) => {
 
     // sale methods
     const addSale = async (sale) => {
-        const response = await axios.post(`${BASE_URL}/sale/new`, sale)
-        .catch((error) => {
+        try {
+            const response = await axios.post(`${BASE_URL}/sale/new`, sale)
+            const { message, error } = response.data
+            if(message){
+                handleSuccess(message)
+            }
+            if(error){
+                handleError(error)
+            }
+        } catch (error) {
             console.log(error)
-        })
+        }
         getSales()
     }
 
@@ -44,10 +53,15 @@ export const ContextProvider = ({ children }) => {
     }
 
     const deleteSale = async (id) => {
-        const response = await axios.delete(`${BASE_URL}/sale/delete/${id}`)
-        .catch((error) => {
+        try {
+            const response = await axios.delete(`${BASE_URL}/sale/delete/${id}`)
+            const { message } = response.data
+            if(message){
+                handleSuccess(message)
+            }
+        } catch (error) {
             console.log(error)
-        })
+        }
         getSales()
     }
 
@@ -78,10 +92,18 @@ export const ContextProvider = ({ children }) => {
     // end sale methods
     // product methods
     const addProduct = async (product) => {
-        const response = await axios.post(`${BASE_URL}/product/new`, product)
-        .catch((error) => {
+        try {
+            const response = await axios.post(`${BASE_URL}/product/new`, product)
+            const { message, error } = response.data
+            if(message){
+                handleSuccess(message)
+            }
+            if(error){
+                handleError(error)
+            }
+        } catch (error) {
             console.log(error)
-        })
+        }
         getProducts()
     }
 
@@ -94,10 +116,15 @@ export const ContextProvider = ({ children }) => {
     }
 
     const deleteProduct = async (id) => {
-        const response = await axios.delete(`${BASE_URL}/product/delete/${id}`)
-        .catch((error) => {
+        try {
+            const response = await axios.delete(`${BASE_URL}/product/delete/${id}`)
+            const { message } = response.data
+            if(message){
+                handleSuccess(message)
+            }
+        } catch (error) {
             console.log(error)
-        })
+        }
         getProducts()
     }
 
@@ -107,10 +134,18 @@ export const ContextProvider = ({ children }) => {
     // end product methods
     // employee methods
     const addEmployee = async (employee) => {
-        const response = await axios.post(`${BASE_URL}/employee/new`, employee)
-        .catch((error) => {
+        try {
+            const response = await axios.post(`${BASE_URL}/employee/new`, employee)
+            const { message, error } = response.data;
+            if(message){
+                handleSuccess(message)
+            }
+            if (error){
+                handleError(error)
+            }
+        } catch (error) {
             console.log(error)
-        })
+        }
         getEmployees()
     }
 
@@ -123,10 +158,15 @@ export const ContextProvider = ({ children }) => {
     }
 
     const deleteEmployee = async (id) => {
-        const response = await axios.delete(`${BASE_URL}/employee/delete/${id}`)
-        .catch((error) => {
+        try {
+            const response = await axios.delete(`${BASE_URL}/employee/delete/${id}`)
+            const { message } = response.data;
+            if(message){
+                handleSuccess(message)
+            }
+        } catch (error) {
             console.log(error)
-        })
+        }
         getEmployees()
     }
 
@@ -135,7 +175,7 @@ export const ContextProvider = ({ children }) => {
     }
     // end employee methods
     // authentication methods
-    const signup = async (credentials, handleError, handleSuccess, navigate) => {
+    const signup = async (credentials, navigate) => {
         try {
             const { data } = await axios.post(`${BASE_URL}/signup`, credentials, { withCredentials: true })
             const { success, message, token } = data
@@ -156,12 +196,11 @@ export const ContextProvider = ({ children }) => {
         }
     }
 
-    const login = async (credentials, handleError, handleSuccess, navigate) => {
+    const login = async (credentials, navigate) => {
         try {
             const { data } = await axios.post(`${BASE_URL}/login`, credentials, { withCredentials: true });
             const { success, message, token } = data;
             if(success){
-                console.log('setting cookie: ', token)
                 handleSuccess(message);
                 setCookie('token', token, {
                     path: '/',
@@ -206,6 +245,14 @@ export const ContextProvider = ({ children }) => {
         navigate("/login")
     }
     // end authentication methods
+
+    const handleError = (err) =>
+        toast.error(err, { position: "bottom-left" }
+    );
+
+    const handleSuccess = (msg) =>
+        toast.success(msg, { position: "bottom-right" }
+    );
 
     const currentYear = new Date().getUTCFullYear()
 

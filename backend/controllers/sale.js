@@ -16,15 +16,15 @@ exports.addSale = async (req, res) => {
     try {
         //validations
         if(!productName || !productPrice || !date || !customerName || !customerEmail || !customerPhoneNumber || !customerCountry){
-            return res.status(400).json({Error: 'All fields required'})
+            return res.json({ error: "All Fields Required" })
         }
-        if(productPrice <= 0 || !productPrice === 'number'){
-            return res.status(400).json({message: 'Price of Sale must be a positive number!'})
+        if(!/^\d+$/.test(productPrice)){
+            return res.json({ error: 'Price of Sale must be a number'})
         }
         await sale.save()
-        return res.status(200).json({ message: "Sale Created Successfully" })
+        return res.status(200).json({ message: "Sale Added Successfully" })
     } catch (error) {
-        return res.status(500).json({ Error: error })
+        return res.status(500).json({ error: error })
     }
 }
 

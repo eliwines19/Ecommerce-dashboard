@@ -205,7 +205,7 @@ export const ContextProvider = ({ children }) => {
                 setCookie('token', token, {
                     path: '/',
                     httpOnly: false,
-                    sameSite: 'Strict',
+                    sameSite: 'None',
                     secure: true
                 })
                 setTimeout(() => {

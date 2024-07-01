@@ -48,7 +48,7 @@ exports.login = async (req, res, next) => {
       secure: true,
       // withCredentials: true,
       httpOnly: true,
-      sameSite: 'Strict'
+      sameSite: 'None'
     })
     res.status(201).json({ message: "User logged in successfully", success: true, token })
     next()

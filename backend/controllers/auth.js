@@ -28,6 +28,7 @@ exports.signup = async (req, res, next) => {
 
 exports.login = async (req, res, next) => {
   try {
+    // validatioms
     const { email, password } = req.body;
     if(!email || !password){
       return res.json({ message: "All fields required" })
@@ -40,11 +41,14 @@ exports.login = async (req, res, next) => {
     if(!auth){
       return res.json({ message: "Incorrect email or password" })
     }
+    // validatioms
     const token = createSecretToken(user._id)
     res.cookie("token", token, {
       path: '/',
-      withCredentials: true,
-      httpOnly: false
+      secure: true,
+      // withCredentials: true,
+      httpOnly: true,
+      sameSite: 'Strict'
     })
     res.status(201).json({ message: "User logged in successfully", success: true, token })
     next()

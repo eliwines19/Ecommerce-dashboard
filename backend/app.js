@@ -13,7 +13,7 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(
     cors({
-        origin: "http://localhost:3001",
+        origin: ["http://localhost:3001", "https://ecommerce-dashboard-frontend-9rxr.onrender.com"],
         methods: ["GET", "POST", "PUT", "DELETE"],
         credentials: true,
     })

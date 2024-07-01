@@ -183,7 +183,9 @@ export const ContextProvider = ({ children }) => {
                 handleSuccess(message)
                 setCookie('token', token, {
                     path: '/',
-                    sameSite: 'Strict'
+                    httpOnly: false,
+                    sameSite: 'None',
+                    secure: true
                 })
                 setTimeout(() => {
                     navigate('/');

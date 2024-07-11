@@ -6,7 +6,7 @@ import { Header } from '../../components';
 
 const SaleForm = () => {
 
-  const { addSale, currentColor } = useStateContext()
+  const { addSale, currentColor, products } = useStateContext()
 
   const [ inputState, setInputState ] = useState({
     productName: '',
@@ -22,6 +22,24 @@ const SaleForm = () => {
 
   const handleInput = name => e => {
     setInputState({...inputState, [name]: e.target.value})
+  }
+
+  const handleProductChange = e => {
+    const productName = e.target.value;
+    const product = products.find(p => p.name === productName);
+    if (product){
+      setInputState({
+        ...inputState,
+        productName: productName,
+        productPrice: product.price
+      })
+    } else {
+      setInputState({
+        ...inputState,
+        productName: productName,
+        productPrice: ''
+      })
+    }
   }
 
   const handleSubmit = e => {
@@ -46,14 +64,17 @@ const SaleForm = () => {
 
         <div className='flex justify-center'>
           <div className='input-control'>
-            <input
-              className='p-2 m-5 border-b-2 border-gray-500'
-              type="text"
+            <select
+              name='productName'
               value={productName}
-              name={'productName'}
-              placeholder='Name of Product'
-              onChange={handleInput('productName')}
-            />
+              onChange={handleProductChange}
+              className='p-2 m-5 border-b-2 border-gray-500'
+            >
+              <option value="">Select a Product</option>
+              {products.map(product => (
+                <option key={product._id} value={product.name} >{product.name}</option>
+              ))}
+            </select>
           </div>
           <div className='input-control'>
             <input

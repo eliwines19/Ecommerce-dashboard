@@ -1,7 +1,7 @@
 import React from 'react';
 import { ChartComponent, SeriesCollectionDirective, SeriesDirective, Inject, Legend, Category, Tooltip, ColumnSeries, DataLabel } from '@syncfusion/ej2-react-charts';
 
-import { Header } from '../../components';
+import { YearSelector } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
 
 const Bar = () => {
@@ -63,7 +63,14 @@ const Bar = () => {
 
   return (
     <div className='m-4 md:m-10 mt-24 p-10 bg-white dark:bg-secondary-dark-bg rounded-3xl'>
-      <Header category="Chart" title={`Top Selling Products (${selectedYear})`} />
+      <div className='mb-10'>
+        <p className='text-gray-400 dark:text-gray-200'>
+          Chart
+        </p>
+        <p className="text-3xl font-extrabold tracking-right text-slate-900 dark:text-gray-400">
+          Top Selling Products <YearSelector />
+        </p>
+      </div>
       <ChartComponent
           id="charts"
           primaryXAxis={barPrimaryXAxis}

@@ -1,7 +1,7 @@
 import React from 'react'
 import { ChartComponent, SplineAreaSeries, SeriesCollectionDirective, SeriesDirective, Inject, DateTime, Legend } from '@syncfusion/ej2-react-charts'
 
-import { Header } from '../../components'
+import { YearSelector } from '../../components'
 
 import { useStateContext } from '../../contexts/ContextProvider'
 
@@ -62,7 +62,14 @@ const Area = () => {
 
   return (
     <div className='m-4 md:m-10 mt-24 p-10 bg-white dark:bg-secondary-dark-bg rounded-3xl'>
-      <Header category="Chart" title={`Monthly Sales Percentage of Total Earnings (${selectedYear})`} />
+      <div className='mb-10'>
+        <p className='text-gray-400 dark:text-gray-200'>
+          Chart
+        </p>
+        <p className="text-3xl font-extrabold tracking-right text-slate-900 dark:text-gray-400">
+          Monthly Sales Percentage of Total Earnings <YearSelector />
+        </p>
+      </div>
       <ChartComponent
         id="area-chart"
         height="420px"

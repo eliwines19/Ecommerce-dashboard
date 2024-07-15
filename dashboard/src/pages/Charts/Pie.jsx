@@ -1,14 +1,18 @@
 import React from 'react'
-import { Header, Pie as PieChart } from '../../components'
-import { useStateContext } from '../../contexts/ContextProvider'
+import { YearSelector, Pie as PieChart } from '../../components'
 
 const Pie = () => {
 
-  const { selectedYear } = useStateContext()
-
   return (
     <div className='m-4 md:m-10 mt-24 p-10 bg-white dark:bg-secondary-dark-bg rounded-3xl'>
-      <Header category="Chart" title={`Percentage of Products Sold (${selectedYear})`} />
+      <div className='mb-10'>
+        <p className='text-gray-400 dark:text-gray-200'>
+          Chart
+        </p>
+        <p className="text-3xl font-extrabold tracking-right text-slate-900 dark:text-gray-400">
+          Percentage of Products Sold <YearSelector />
+        </p>
+      </div>
       <div className='w-full'>
         <PieChart id="pie-chart" legendVisibility height="full" />
       </div>

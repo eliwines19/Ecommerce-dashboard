@@ -4,7 +4,7 @@ import { useStateContext } from '../../contexts/ContextProvider'
 
 const Stacked = ({ width, height }) => {
 
-  const { currentMode, salesSortedByDate } = useStateContext()
+  const { currentMode, salesSortedByDate, selectedYear } = useStateContext()
   const bgColor = currentMode === 'Dark' ? '#33373E' : '#fff'
 
   const getChartData = () => {
@@ -16,11 +16,9 @@ const Stacked = ({ width, height }) => {
       const date = new Date(sale.date);
       const monthIndex = date.getUTCMonth();
       const monthName = monthNames[monthIndex];
-      const currentDate = new Date();
-      const currentYear = currentDate.getFullYear();
       const saleYear = date.getUTCFullYear();
 
-      if(saleYear === currentYear){
+      if(saleYear === selectedYear){
         // Initialize the month's sales if not already done
         if (!salesPerMonth[monthName]) {
           salesPerMonth[monthName] = 0;

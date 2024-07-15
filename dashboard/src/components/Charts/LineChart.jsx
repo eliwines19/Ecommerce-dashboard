@@ -5,7 +5,7 @@ import { useStateContext } from '../../contexts/ContextProvider'
 
 const LineChart = () => {
 
-  const { currentMode, sales } = useStateContext()
+  const { currentMode, sales, selectedYear } = useStateContext()
   const bgColor = currentMode === "Dark" ? '#33373E' : '#fff'
 
   const getChartData = () => {
@@ -14,10 +14,9 @@ const LineChart = () => {
     sales.forEach((sale) => {
       const date = new Date(sale.date);
       const monthIndex = date.getUTCMonth();
-      const currentYear = new Date().getFullYear();
       const saleYear = date.getFullYear();
 
-      if(currentYear === saleYear){
+      if(selectedYear === saleYear){
         monthlySales[monthIndex] += 1;
       }
     })

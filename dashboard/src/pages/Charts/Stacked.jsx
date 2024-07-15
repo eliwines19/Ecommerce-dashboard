@@ -4,11 +4,11 @@ import { useStateContext } from '../../contexts/ContextProvider'
 
 const Stacked = () => {
 
-  const { currentYear } = useStateContext()
+  const { selectedYear } = useStateContext()
 
   return (
     <div className="m-4 md:m-10 mt-24  p-10 bg-white dark:bg-secondary-dark-bg rounded-3xl">
-      <Header category='Chart' title={`Earnings By Month (${currentYear})`} />
+      <Header category='Chart' title={`Earnings By Month (${selectedYear})`} />
       <div className='w-full'>
         <StackedChart />
       </div>

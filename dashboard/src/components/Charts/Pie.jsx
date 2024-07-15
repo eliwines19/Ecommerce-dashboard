@@ -6,7 +6,7 @@ import { useStateContext } from '../../contexts/ContextProvider';
 
 const Doughnut = ({ id, legendVisiblity, height }) => {
 
-  const { currentMode, currentYear, sales, totalSales } = useStateContext();
+  const { currentMode, selectedYear, sales, totalSales } = useStateContext();
   const bgColor = currentMode === 'Dark' ? '#33373E' : '#fff'
 
   const getChartData = () => {
@@ -16,7 +16,7 @@ const Doughnut = ({ id, legendVisiblity, height }) => {
     sales.forEach((sale) => {
       const { productName, date } = sale;
       const saleYear = new Date(date).getUTCFullYear()
-      if(currentYear === saleYear){
+      if(selectedYear === saleYear){
         if(!salesCount[productName]){
           salesCount[productName] = 0
         }

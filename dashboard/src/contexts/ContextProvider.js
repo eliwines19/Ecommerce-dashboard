@@ -27,6 +27,7 @@ export const ContextProvider = ({ children }) => {
     const [ sales, setSales ] = useState([])
     const [ cookies, setCookie, removeCookie ] = useCookies(['token']);
     const [ username, setUsername ] = useState("");
+    const [ selectedYear, setSelectedYear ] = useState(new Date().getUTCFullYear());
 
     // sale methods
     const addSale = async (sale) => {
@@ -316,6 +317,8 @@ export const ContextProvider = ({ children }) => {
                 getEmployees,
                 deleteEmployee,
                 totalEmployees,
+                selectedYear,
+                setSelectedYear,
                 signup,
                 login,
                 logout,

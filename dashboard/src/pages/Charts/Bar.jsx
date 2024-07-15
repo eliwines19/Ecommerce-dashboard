@@ -6,7 +6,7 @@ import { useStateContext } from '../../contexts/ContextProvider';
 
 const Bar = () => {
 
-  const { currentMode, currentYear, sales } = useStateContext()
+  const { currentMode, selectedYear, sales } = useStateContext()
   const bgColor = currentMode === 'Dark' ? '#33373E' : '#fff'
 
   const getChartData = () => {
@@ -16,7 +16,7 @@ const Bar = () => {
     sales.forEach((sale) => {
       const { productName, date } = sale;
       const saleYear = new Date(date).getUTCFullYear()
-      if(saleYear === currentYear){
+      if(saleYear === selectedYear){
         if(!productCount[productName]){
           productCount[productName] = 0;
         }
@@ -63,7 +63,7 @@ const Bar = () => {
 
   return (
     <div className='m-4 md:m-10 mt-24 p-10 bg-white dark:bg-secondary-dark-bg rounded-3xl'>
-      <Header category="Chart" title={`Top Selling Products (${currentYear})`} />
+      <Header category="Chart" title={`Top Selling Products (${selectedYear})`} />
       <ChartComponent
           id="charts"
           primaryXAxis={barPrimaryXAxis}

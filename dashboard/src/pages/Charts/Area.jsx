@@ -7,7 +7,7 @@ import { useStateContext } from '../../contexts/ContextProvider'
 
 const Area = () => {
 
-  const { currentMode, sales, totalEarnings, currentYear } = useStateContext()
+  const { currentMode, sales, totalEarnings, selectedYear } = useStateContext()
   const bgColor = currentMode === "Dark" ? '#33373E' : '#fff'
 
   const getChartData = () => {
@@ -17,7 +17,7 @@ const Area = () => {
       const date = new Date(sale.date);
       const saleYear = date.getUTCFullYear()
       const monthIndex = date.getUTCMonth();
-      if(saleYear === currentYear){
+      if(saleYear === selectedYear){
         monthlyEarnings[monthIndex] += sale.productPrice;
       }
     })
@@ -62,7 +62,7 @@ const Area = () => {
 
   return (
     <div className='m-4 md:m-10 mt-24 p-10 bg-white dark:bg-secondary-dark-bg rounded-3xl'>
-      <Header category="Chart" title={`Monthly Sales Percentage of Total Earnings (${currentYear})`} />
+      <Header category="Chart" title={`Monthly Sales Percentage of Total Earnings (${selectedYear})`} />
       <ChartComponent
         id="area-chart"
         height="420px"

@@ -17,6 +17,7 @@ const LineChart = () => {
       const saleYear = date.getFullYear();
 
       if(selectedYear === saleYear){
+        console.log('selectedYear matches sale year')
         monthlySales[monthIndex] += 1;
       }
     })

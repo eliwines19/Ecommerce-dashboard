@@ -259,8 +259,6 @@ export const ContextProvider = ({ children }) => {
         toast.success(msg, { position: "bottom-right" }
     );
 
-    const currentYear = new Date().getUTCFullYear()
-
     const prettyNumber = (number) => {
         return number.toLocaleString();
     }
@@ -298,7 +296,6 @@ export const ContextProvider = ({ children }) => {
                 setMode,
                 setColor,
                 initialState,
-                currentYear,
                 sales,
                 addSale,
                 getSales,

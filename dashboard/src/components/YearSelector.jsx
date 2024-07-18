@@ -3,7 +3,7 @@ import { useStateContext } from '../contexts/ContextProvider'
 
 const YearSelector = () => {
 
-  const { selectedYear, setSelectedYear, sales, currentColor } = useStateContext();
+  const { selectedYear, setSelectedYear, sales } = useStateContext();
 
   const getSaleYears = () => {
     const years = new Set();
@@ -26,8 +26,7 @@ const YearSelector = () => {
         name='selectedYear'
         value={selectedYear}
         onChange={handleChange}
-        style={{ backgroundColor: currentColor }}
-        className='rounded-lg p-2 text-white'
+        className='border-b-2 border-gray-500'
       >
         {getSaleYears().map((year, index) => (
           <option key={index} value={year}>{year}</option>

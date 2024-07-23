@@ -3,8 +3,8 @@ import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
 import axios from 'axios';
 
-// const BASE_URL = 'http://localhost:3000/api/v1';
-const BASE_URL = 'https://ecommerce-dashboard-rrsc.onrender.com/api/v1';
+const BASE_URL = 'http://localhost:3000/api/v1';
+// const BASE_URL = 'https://ecommerce-dashboard-rrsc.onrender.com/api/v1';
 
 const StateContext = createContext()
 
@@ -180,7 +180,7 @@ export const ContextProvider = ({ children }) => {
     const signup = async (credentials, navigate) => {
         try {
             const { data } = await axios.post(`${BASE_URL}/signup`, credentials, { withCredentials: true })
-            const { success, message, token } = data
+            const { success, message, user, token } = data
             if(success){
                 handleSuccess(message)
                 setCookie('token', token, {
@@ -203,7 +203,7 @@ export const ContextProvider = ({ children }) => {
     const login = async (credentials, navigate) => {
         try {
             const { data } = await axios.post(`${BASE_URL}/login`, credentials, { withCredentials: true });
-            const { success, message, token } = data;
+            const { success, message, user, token } = data;
             if(success){
                 handleSuccess(message);
                 setCookie('token', token, {
@@ -231,12 +231,14 @@ export const ContextProvider = ({ children }) => {
         } else {
             try {
                 const { data } = await axios.post(`${BASE_URL}/`, {}, { withCredentials: true });
-                const { status, user } = data;
+                const { status, user, colorTheme } = data;
+                console.log(data)
                 if(status === false){
                     removeCookie('token')
                     navigate('/login')
                 } else {
                     setUsername(user)
+                    setColor(colorTheme)
                 }
             } catch (error) {
                 removeCookie('token')

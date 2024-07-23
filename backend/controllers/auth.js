@@ -20,7 +20,7 @@ exports.signup = async (req, res, next) => {
           httpOnly: true,
           sameSite: 'None'
         });
-        res.status(201).json({ message: "User signed in successfully", success: true, user, token });
+        res.status(201).json({ message: "User signed in successfully", success: true, token });
         next();
       } catch (error) {
         console.error(error);

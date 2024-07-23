@@ -14,6 +14,11 @@ const userSchema = mongoose.Schema({
     password: {
         type: String,
         required: [true, "Password is required"]
+    },
+    colorTheme: {
+        type: String,
+        required: false,
+        default: '#03C9D7'
     }
 }, { timestamps: true })
 

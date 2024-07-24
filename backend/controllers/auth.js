@@ -42,7 +42,7 @@ exports.login = async (req, res, next) => {
     if(!auth){
       return res.json({ message: "Incorrect email or password" })
     }
-    // validatioms
+    // end validations
     const token = createSecretToken(user._id)
     res.cookie("token", token, {
       path: '/',

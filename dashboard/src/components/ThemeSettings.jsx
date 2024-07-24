@@ -6,7 +6,12 @@ import { useStateContext } from '../contexts/ContextProvider'
 
 const ThemeSettings = () => {
 
-  const { setColor, setMode, currentMode, currentColor, setThemeSettings } = useStateContext()
+  const { setColor, setMode, currentMode, currentColor, setThemeSettings, updateColorTheme } = useStateContext()
+
+  const handleChange = e => {
+    setColor(e.value);
+    updateColorTheme(e.value);
+  }
 
   return (
     <div className='bg-half-transparent w-screen fixed nav-item top-0 right-0'>
@@ -65,7 +70,7 @@ const ThemeSettings = () => {
               modeSwitcher={false}
               inline
               value={currentColor}
-              change={(e) => setColor(e.value)}
+              change={handleChange}
             />
           </div>
         </div>

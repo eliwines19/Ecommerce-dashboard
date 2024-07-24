@@ -27,6 +27,7 @@ export const ContextProvider = ({ children }) => {
     const [ sales, setSales ] = useState([])
     const [ cookies, setCookie, removeCookie ] = useCookies(['token']);
     const [ username, setUsername ] = useState("");
+    const [ email, setEmail ] = useState("");
     const [ selectedYear, setSelectedYear ] = useState(new Date().getUTCFullYear());
 
     // sale methods
@@ -203,7 +204,7 @@ export const ContextProvider = ({ children }) => {
     const login = async (credentials, navigate) => {
         try {
             const { data } = await axios.post(`${BASE_URL}/login`, credentials, { withCredentials: true });
-            const { success, message, user, token } = data;
+            const { success, message, token } = data;
             if(success){
                 handleSuccess(message);
                 setCookie('token', token, {
@@ -223,7 +224,7 @@ export const ContextProvider = ({ children }) => {
         }
     }
 
-    const verifyCookie = async (navigate, toast, location) => {
+    const verifyCookie = async (navigate, location) => {
         if(!cookies.token){
             if (location.pathname !== '/signup'){
                 navigate('/login');
@@ -231,12 +232,13 @@ export const ContextProvider = ({ children }) => {
         } else {
             try {
                 const { data } = await axios.post(`${BASE_URL}/`, {}, { withCredentials: true });
-                const { status, user, colorTheme } = data;
+                const { status, user, email, colorTheme } = data;
                 console.log(data)
                 if(status === false){
                     removeCookie('token')
                     navigate('/login')
                 } else {
+                    setEmail(email)
                     setUsername(user)
                     setColor(colorTheme)
                 }
@@ -252,6 +254,23 @@ export const ContextProvider = ({ children }) => {
         navigate("/login")
     }
     // end authentication methods
+    // user methods
+    const updateColorTheme = async (colorTheme) => {
+        try {
+            const response = await axios.post(`${BASE_URL}/user/update`, { email, colorTheme })
+            const { message, error } = response.data;
+            console.log(message)
+            if(message){
+                handleSuccess(message)
+            }
+            if(error){
+                handleError(error)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    // end user methods
 
     const handleError = (err) =>
         toast.error(err, { position: "bottom-left" }
@@ -318,6 +337,7 @@ export const ContextProvider = ({ children }) => {
                 totalEmployees,
                 selectedYear,
                 setSelectedYear,
+                updateColorTheme,
                 signup,
                 login,
                 logout,

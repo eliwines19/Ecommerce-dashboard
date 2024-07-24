@@ -1,13 +1,12 @@
 const UserSchema = require("../models/UserModel");
 
 exports.updateColorTheme = async (req, res) => {
-    const { id } = req.params;
-    const { colorTheme } = req.body;
+    const { email, colorTheme } = req.body;
     try {
         if(!colorTheme){
             return res.json({ error: 'No Color Theme Provided' })
         }
-        const user = await UserSchema.findById(id);
+        const user = await UserSchema.findOne({ email });
         if(!user){
             return res.json({ error: "No user found. Refresh the page and try again" })
         }

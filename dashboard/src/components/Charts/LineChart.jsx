@@ -1,6 +1,6 @@
-import React from 'react'
-import { ChartComponent, LineSeries, SeriesCollectionDirective, SeriesDirective, Inject, DateTime, Legend, Tooltip } from '@syncfusion/ej2-react-charts'
-
+import React, { useRef } from 'react'
+import { ChartComponent, LineSeries, SeriesCollectionDirective, SeriesDirective, Inject, DateTime, Legend, Tooltip, Export } from '@syncfusion/ej2-react-charts'
+import ExportButton from '../ExportButton'
 import { useStateContext } from '../../contexts/ContextProvider'
 
 const LineChart = () => {
@@ -54,24 +54,30 @@ const LineChart = () => {
     majorTickLines: { width: 0 },
     minorTickLines: { width: 0 },
   };
-  
+
+  const chartInstance = useRef(null);
 
   return (
-    <ChartComponent
-      id="line-chart"
-      height="420px"
-      primaryXAxis={LinePrimaryXAxis}
-      primaryYAxis={LinePrimaryYAxis}
-      chartArea={{ border: { width: 0 } }}
-      tooltip={{ enable: true }}
-      background={ bgColor }
-      legendSettings={{ background: bgColor, textStyle: { color: currentMode === 'Dark' ? '#fff' : '#33373E' } }}
-    >
-      <Inject services={[LineSeries, DateTime, Legend, Tooltip]}/>
-      <SeriesCollectionDirective>
-        {lineCustomSeries.map((item, index) => <SeriesDirective key={index} {...item} />)}
-      </SeriesCollectionDirective>
-    </ChartComponent>
+    <div>
+      <ChartComponent
+        title='Products Sold Per Month'
+        ref={chartInstance}
+        id="line-chart"
+        height="420px"
+        primaryXAxis={LinePrimaryXAxis}
+        primaryYAxis={LinePrimaryYAxis}
+        chartArea={{ border: { width: 0 } }}
+        tooltip={{ enable: true }}
+        background={ bgColor }
+        legendSettings={{ background: bgColor, textStyle: { color: currentMode === 'Dark' ? '#fff' : '#33373E' } }}
+      >
+        <Inject services={[LineSeries, DateTime, Legend, Tooltip, Export]}/>
+        <SeriesCollectionDirective>
+          {lineCustomSeries.map((item, index) => <SeriesDirective key={index} {...item} />)}
+        </SeriesCollectionDirective>
+      </ChartComponent>
+      <ExportButton chartInstance={chartInstance} title={'Products Sold Per Month'}/>
+    </div>
   )
 }
 

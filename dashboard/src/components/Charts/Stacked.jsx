@@ -1,5 +1,8 @@
-import React from 'react'
-import { ChartComponent, SeriesCollectionDirective, SeriesDirective, Inject, Legend, Category, StackingColumnSeries, Tooltip } from '@syncfusion/ej2-react-charts'
+import React, { useRef } from 'react'
+import { ChartComponent, SeriesCollectionDirective, SeriesDirective, Inject, Legend, Category, StackingColumnSeries, Tooltip, Export } from '@syncfusion/ej2-react-charts'
+
+import ExportButton from '../ExportButton'
+
 import { useStateContext } from '../../contexts/ContextProvider'
 
 const Stacked = ({ width, height }) => {
@@ -66,23 +69,30 @@ const Stacked = ({ width, height }) => {
     labelFormat: '${value}'
   };
 
+  const chartInstance = useRef(null)
+
   return (
-    <ChartComponent
-      width={width}
-      height={height}
-      id="charts"
-      primaryXAxis={stackedPrimaryXAxis}
-      primaryYAxis={stackedPrimaryYAxis}
-      chartArea={{ border: { width: 0 } }}
-      tooltip={{ enable: true }}
-      background={ bgColor }
-      legendSettings={{ background: bgColor, textStyle: { color: currentMode === 'Dark' ? '#fff' : '#33373E' } }}
-    >
-      <Inject services={[Legend, Category, StackingColumnSeries, Tooltip]} />
-      <SeriesCollectionDirective>
-        {stackedCustomSeries.map((item, index) => <SeriesDirective key={index} {...item} /> )}
-      </SeriesCollectionDirective>
-    </ChartComponent>
+    <div>
+      <ChartComponent
+        title='Earnings Per Month'
+        ref={chartInstance}
+        width={width}
+        height={height}
+        id="charts"
+        primaryXAxis={stackedPrimaryXAxis}
+        primaryYAxis={stackedPrimaryYAxis}
+        chartArea={{ border: { width: 0 } }}
+        tooltip={{ enable: true }}
+        background={ bgColor }
+        legendSettings={{ background: bgColor, textStyle: { color: currentMode === 'Dark' ? '#fff' : '#33373E' } }}
+      >
+        <Inject services={[Legend, Category, StackingColumnSeries, Tooltip, Export]} />
+        <SeriesCollectionDirective>
+          {stackedCustomSeries.map((item, index) => <SeriesDirective key={index} {...item} /> )}
+        </SeriesCollectionDirective>
+      </ChartComponent>
+      <ExportButton chartInstance={chartInstance} title={'Earnings Per Month'} />
+    </div>
   )
 }
 

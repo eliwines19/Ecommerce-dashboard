@@ -1,7 +1,8 @@
-import React from 'react';
-import { ChartComponent, SeriesCollectionDirective, SeriesDirective, Inject, Legend, Category, Tooltip, ColumnSeries, DataLabel } from '@syncfusion/ej2-react-charts';
+import React, { useRef } from 'react';
+import { ChartComponent, SeriesCollectionDirective, SeriesDirective, Inject, Legend, Export, Category, Tooltip, ColumnSeries, DataLabel } from '@syncfusion/ej2-react-charts';
 
 import { YearSelector } from '../../components';
+import ExportButton from '../../components/ExportButton';
 import { useStateContext } from '../../contexts/ContextProvider';
 
 const Bar = () => {
@@ -61,6 +62,8 @@ const Bar = () => {
     labelStyle: { color: 'transparent' },
   };
 
+  const chartInstance = useRef(null)
+
   return (
     <div className='m-4 md:m-10 mt-24 p-10 bg-white dark:bg-secondary-dark-bg rounded-3xl'>
       <div className='mb-10'>
@@ -72,6 +75,8 @@ const Bar = () => {
         </p>
       </div>
       <ChartComponent
+          title='Top Selling Products'
+          ref={chartInstance}
           id="charts"
           primaryXAxis={barPrimaryXAxis}
           primaryYAxis={barPrimaryYAxis}
@@ -80,11 +85,12 @@ const Bar = () => {
           background={ bgColor }
           legendSettings={{ background: bgColor, textStyle: { color: currentMode === 'Dark' ? '#fff' : '#33373E' } }}
       >
-        <Inject services={[ColumnSeries, Legend, Tooltip, Category, DataLabel]} />
+        <Inject services={[ColumnSeries, Legend, Tooltip, Category, DataLabel, Export]} />
         <SeriesCollectionDirective>
           {barCustomSeries.map((item, index) => <SeriesDirective key={index} {...item} />)}
         </SeriesCollectionDirective>
       </ChartComponent>
+      <ExportButton chartInstance={chartInstance} title={'Top Selling Products'}/>
     </div>
   )
 }

@@ -233,7 +233,6 @@ export const ContextProvider = ({ children }) => {
             try {
                 const { data } = await axios.post(`${BASE_URL}/`, {}, { withCredentials: true });
                 const { status, user, email, colorTheme } = data;
-                console.log(data)
                 if(status === false){
                     removeCookie('token')
                     navigate('/login')
@@ -259,7 +258,6 @@ export const ContextProvider = ({ children }) => {
         try {
             const response = await axios.post(`${BASE_URL}/user/update`, { email, colorTheme })
             const { message, error } = response.data;
-            console.log(message)
             if(message){
                 handleSuccess(message)
             }
